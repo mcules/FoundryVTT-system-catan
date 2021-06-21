@@ -2,7 +2,7 @@
   "name": "fcatan",
   "title": "Founders of Catan",
   "description": "PRIVATE USE version of Settlers of Catan for Foundry VTT. Intended for my personal use and learning purposes only.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "minimumCoreVersion": "0.8.5",
   "compatibleCoreVersion": "0.8.7",
   "author": "Norc",
@@ -22,6 +22,6 @@
   "secondaryTokenAttribute": "2",
   "url": "https://github.com/Norc/fcatan",
   "manifest": "https://raw.githubusercontent.com/Norc/fcatan/master/system.json",
-  "download": "https://github.com/Norc/fcatan/releases/download/0.0.1/fcatan.zip",
+  "download": "https://github.com/Norc/fcatan/releases/download/0.0.2/fcatan.zip",
   "license": ""
 }

@@ -21,7 +21,7 @@
   "primaryTokenAttribute": "1",
   "secondaryTokenAttribute": "2",
   "url": "https://github.com/Norc/fcatan-sys",
-  "manifest": "https://raw.githubusercontent.com/Norc/fcatan-sys/master/system.json",
-  "download": "https://github.com/Norc/fcatan-sys/releases/download/0.0.1/fcatan-sys.zip",
+  "manifest": "https://raw.githubusercontent.com/Norc/fcatan/master/system.json",
+  "download": "https://github.com/Norc/fcatan-sys/releases/download/0.0.1/fcatan.zip",
   "license": ""
 }

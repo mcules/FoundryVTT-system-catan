@@ -1,0 +1,27 @@
+{
+  "name": "placeh",
+  "title": "Placeholder System",
+  "description": "The minimal possible Foundry game system for testing and development purposes only.",
+  "version": "0.1.0",
+  "minimumCoreVersion": "0.8.5",
+  "compatibleCoreVersion": "0.8.7",
+  "author": "Norc",
+  "esmodules": ["module/placeh.js"],
+  "styles": ["styles/placeh.css"],
+  "packs": [],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "gridDistance": 5,
+  "gridUnits": "ft",
+  "primaryTokenAttribute": "1",
+  "secondaryTokenAttribute": "2",
+  "url": "",
+  "manifest": "",
+  "download": "",
+  "license": "LICENSE.txt"
+}

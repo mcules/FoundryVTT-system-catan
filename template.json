@@ -1,0 +1,30 @@
+{
+"Actor": {
+  "types": ["character"],
+  "character": {
+    "biography": "",
+    "1": {
+      "value": 1,
+      "min": 0,
+      "max": 1
+    },
+    "power": {
+      "value": 1,
+      "min": 0,
+      "max": 1
+    },
+    "attributes": {},
+    "groups": {}
+  }
+},
+"Item": {
+  "types": ["item"],
+  "item": {
+    "description": "",
+    "quantity": 1,
+    "weight": 0,
+    "attributes": {},
+    "groups": {}
+  }
+}
+}

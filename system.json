@@ -1,13 +1,13 @@
 {
-  "name": "placeh",
-  "title": "Placeholder System",
-  "description": "The minimal possible Foundry game system for testing and development purposes only.",
-  "version": "0.1.0",
+  "name": "fcatan",
+  "title": "Founders of Catan",
+  "description": "PRIVATE USE version of Settlers of Catan for Foundry VTT. Intended for my personal use and learning purposes only.",
+  "version": "0.0.1",
   "minimumCoreVersion": "0.8.5",
   "compatibleCoreVersion": "0.8.7",
   "author": "Norc",
-  "esmodules": ["module/placeh.js"],
-  "styles": ["styles/placeh.css"],
+  "esmodules": ["module/fcatan.js"],
+  "styles": ["styles/fcatan.css"],
   "packs": [],
   "languages": [
     {
@@ -20,8 +20,8 @@
   "gridUnits": "ft",
   "primaryTokenAttribute": "1",
   "secondaryTokenAttribute": "2",
-  "url": "https://github.com/Norc/placeh-sys",
-  "manifest": "https://raw.githubusercontent.com/Norc/placeh-sys/master/system.json",
-  "download": "https://github.com/Norc/placeh-sys/releases/download/0.0.2/placeh-sys.zip",
-  "license": "LICENSE.txt"
+  "url": "https://github.com/Norc/fcatan-sys",
+  "manifest": "https://raw.githubusercontent.com/Norc/fcatan-sys/master/system.json",
+  "download": "https://github.com/Norc/fcatan-sys/releases/download/0.0.1/fcatan-sys.zip",
+  "license": ""
 }

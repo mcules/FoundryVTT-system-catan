@@ -1,4 +1,3 @@
-# Placeholder Game System
+# Founders of Catan Game System
 
-A version of Atropos Simple Worldbuilding system that is as stripped down as possible.
-The goal of this system is to be the minimal possible Foundry game system that will still load successfully for testing and system development purposes only.
+This is a PRIVATE USE game system version of Settlers of Catan for Foundry VTT for learning purposes. This is not in any way intended for distribution of any kind.

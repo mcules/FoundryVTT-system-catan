@@ -20,8 +20,8 @@
   "gridUnits": "ft",
   "primaryTokenAttribute": "1",
   "secondaryTokenAttribute": "2",
-  "url": "",
-  "manifest": "",
-  "download": "",
+  "url": "https://github.com/Norc/placeh-sys",
+  "manifest": "https://raw.githubusercontent.com/Norc/placeh-sys/master/system.json",
+  "download": "https://github.com/Norc/placeh-sys/releases/download/0.0.1/placeh-sys.zip",
   "license": "LICENSE.txt"
 }

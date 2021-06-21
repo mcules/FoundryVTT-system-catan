@@ -20,7 +20,7 @@
   "gridUnits": "ft",
   "primaryTokenAttribute": "1",
   "secondaryTokenAttribute": "2",
-  "url": "https://github.com/Norc/fcatan-sys",
+  "url": "https://github.com/Norc/fcatan",
   "manifest": "https://raw.githubusercontent.com/Norc/fcatan/master/system.json",
   "download": "https://github.com/Norc/fcatan-sys/releases/download/0.0.1/fcatan.zip",
   "license": ""

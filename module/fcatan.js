@@ -5,7 +5,7 @@
 
 // Import Modules
 // Import Modules
-import { _getInitiativeFormula } from "./module/combat.js";
+import addTiebreaker from "combat.js";
 
 /* -------------------------------------------- */
 /*  Foundry VTT Initialization                  */
@@ -23,5 +23,9 @@ Hooks.once("init", async function() {
   //set CONFIGs and define any non-optional things as basically as possible here.
 });
 
-
-//add begin combat hook that creates array of possible tiebreaker values (1 integer per registered user) and saves it as a flag on the encounter instance
+/**
+ * Add array of possible tiebreakers to combat when it is created
+ */
+ 
+ Hooks.on("createCombat", (combat, opts, ID) => addTiebreaker(combat));
+ // Hooks.on("hotbarDrop", (bar, data, slot) => macros.create5eMacro(data, slot));

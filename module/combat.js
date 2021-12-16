@@ -1,15 +1,12 @@
-/**
- * Add tiebreaker to Combat prototype
- */
- 
- Combat.prototype.tiebreakers = function() {
-    var tbArray = [];
+import shuffleArray from "norc.js";
 
-    for(var i = 0; i < game.users.size; i++) {
-        tbArray.push(i);
-    }
-    shuffleArray(tbArray);
-    return(tbArray);
+/**
+ * Add array of possible tiebreakers to combat when it is created
+ */
+
+export function addTiebreaker(combat) {
+ combat.tiebreaker = [0.1,0.2,0.3,0.4,0.5,0.6];
+ shuffleArray(combat.tiebreaker);
 }
 
 /**
@@ -34,35 +31,13 @@
  * Catan overrides this by adding a randomly determined unique tiebreaker to each combatant when added and sorting on that.
  * This tiebreaker value is a unique ordinal equal to or less than the total number of registered users, chosen without replacement. 
  */
-//TODO: Check parameter syntax.
  export const _sortCombatants = function(a, b) {
     const ia = Number.isNumeric(a.initiative) ? a.initiative : -9999;
     const ib = Number.isNumeric(b.initiative) ? b.initiative : -9999;
     const ci = ib - ia;
     if ( ci !== 0 ) return ci;
-    const atb = this.tiebreakers[0];
-    const btb = this.tiebreakers[1];
-    tbArray.splice(0,2);
+    a.initiative = a.initiative + this.tiebreaker[0];
+    b.initiative = b.initiative + this.tiebreaker[1];
+    this.tiebreaker.splice(0,2);
     return atb > btb ? 1 : -1;
 }
-
-/**
- * Generic private function to randomize the order of an existing array.
-*/   
-function shuffleArray(array) {
-    let currentIndex = array.length,  randomIndex;
-  
-    // While there remain elements to shuffle...
-    while (currentIndex != 0) {
-  
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-  
-      // And swap it with the current element.
-      [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex], array[currentIndex]];
-    }
-  
-    return array;
-  }

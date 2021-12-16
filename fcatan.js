@@ -5,7 +5,7 @@
 
 // Import Modules
 // Import Modules
-import addTiebreaker from "combat.js";
+import { addTiebreaker } from "./module/combat.js";
 
 /* -------------------------------------------- */
 /*  Foundry VTT Initialization                  */
@@ -19,8 +19,11 @@ import addTiebreaker from "combat.js";
  */
 Hooks.once("init", async function() {
 
-  console.log(`Initializing Founders of Catan System`);
+  console.log(`CATAN | Initializing Founders of Catan System`);
+
   //set CONFIGs and define any non-optional things as basically as possible here.
+  CONFIG.Combat.initiative.formula = "2d6";
+
 });
 
 /**

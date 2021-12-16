@@ -1,10 +1,12 @@
-import shuffleArray from "norc.js";
+import { shuffleArray } from "./norc.js";
 
 /**
  * Add array of possible tiebreakers to combat when it is created
  */
 
 export function addTiebreaker(combat) {
+ console.log('CATAN | Attempting to add tiebreaker to combat:');
+ console.log(combat);
  combat.tiebreaker = [0.1,0.2,0.3,0.4,0.5,0.6];
  shuffleArray(combat.tiebreaker);
 }
@@ -17,7 +19,7 @@ export function addTiebreaker(combat) {
  */
  export const _getInitiativeFormula = function() {
     const actor = this.actor;
-    if ( !actor ) return "2d6";
+    if ( !actor ) return CONFIG.Combat.initiative.formula;
     const actorData = actor.data.data;
     const rollData = actor.getRollData();
 

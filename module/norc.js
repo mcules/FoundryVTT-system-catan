@@ -21,10 +21,16 @@ export function shuffleArray(array) {
     return array;
   }
 
- //should use localeCompare 
- // caS = ca.sort((a,b) => (a.data.name > b.data.name) ? 1 : -1)
+//function to sort the cards in a given deck by name. returns array of sorted card objects.
+function sortCardsByName(sortDeck) {
+    //let caS = sortDeck.cards.contents.sort((a,b) => (a.data.name > b.data.name) String(a[0]).localeCompare(b[0])))
+    //above line works, but should use localeCompare. not yet tested, but something like the following:
+    let caS = sortDeck.cards.contents.sort( (a,b) => {
+        String(a.data.name).localeCompare(b.data.name)
+    });
+    return caS
+}
 
- let caS = d2.cards.contents.sort((a,b) => (a.data.name > b.data.name) ? 1 : -1)
  
 //Replaces all cards in a deck with an array of new cards.
 //Particularly useful for sorting a deck. (replace existing cards with a sorted array)

@@ -21,57 +21,40 @@ export function shuffleArray(array) {
     return array;
   }
 
+//TODO: Check terminology. Should these be working with "decks,"" or rather "stacks"?
+//TODO: Data input validation and messaging
+
+//adds an int number of copies (numCopies) of a source Card (srcCard) to the end of the destination deck (dstDeck).
+async function addCardCopy(dstDeck, srcCard, numCopies) {
+    let newArrCardData = Array.from({length: numCopies}, () => srcCard.data);
+    await dstDeck.createEmbeddedDocuments("Card", newArrCardData);
+    return dstDeck;
+}
+
 //function to sort the cards in a given deck by name. returns array of sorted card objects.
-function sortCardsByName(sortDeck) {
-    let caS = sortDeck.cards.contents.sort( (a,b) => {
-        String(a.data.name).localeCompare(b.data.name)
-    });
-    return caS
+async function sortDeckByCardName(sortDeck) {
+    //TODO: Add better number sorting, reverse sort as optional param
+    let newArrCard = sortDeck.cards.contents.sort( (a,b) => String(a.data.name).localeCompare(b.data.name) );
+    //built-in version of replaceEmbeddedCards function for convenience
+    await sortDeck.deleteEmbeddedDocuments("Card", [""], {deleteAll: true});
+
+    let newArrCardData = [];
+    newArrCard.forEach( (item) => newArrCardData.push(item.data) );
+
+    await sortDeck.createEmbeddedDocuments("Card", newArrCardData);
+    return sortDeck;
 }
 
- 
-//Replaces all cards in a deck with an array of new cards.
-//Particularly useful for sorting a deck. (replace existing cards with a sorted array)
+//Replaces all Card embedded documents in a deck with a new array of Card embedded docs.
+//Particularly useful for sorting a deck arbitrarily
+//(sort the array of Card embeddedDocuments however you want, then pass as arg)
 async function replaceEmbeddedCards(replDeck, newArr) {
-//Parameter explanations
-//replDeck is deck that needs to have its cards replaced (its Card embedded docs)
-//newArr is the array of new cards
+    //replDeck is the deck to work with, newArr is the array of new Card embedded docs to store
+    await replDeck.deleteEmbeddedDocuments("Card", [""], {deleteAll: true});
 
-//useful contextOptions
-//deleteAll
-//keepId
+    let newArrData = [];
+    newArr.forEach( (item) => newArrData.push(item.data) );
 
-let delIds = getArrIds(replDeck);
-await replDeck.deleteEmbeddedDocuments("Card", delIds);
-
-let newArrData = [];
-
-newArr.forEach( (item) => newArrData.push(item.data) );
-
-await replDeck.createEmbeddedDocuments("Card", newArrData);
-return replDeck;
+    await replDeck.createEmbeddedDocuments("Card", newArrData);
+    return replDeck;
 }
-
-function objArrToMap(arr) {
-    let dcS = new Map();
-    arr.forEach( (item) => {
-        dcS.set(item.id, item)
-    } ); 
-    return dcS
-}
-
-d2.deleteEmbeddedDocuments({embeddedName:"Card", ids:[], context:"deleteAll"})
-
-d2.deleteEmbeddedDocuments("Card", [""], "deleteAll")
-
-d2.deleteEmbeddedDocuments("Card", [...d2.id])
-
-//Returns array of IDs of all cards in a deck
-function getArrIds(deck) {
-    let r = [];
-    deck.cards.contents.forEach( (item) => {
-        r.push(item.id);
-    })
-    return r;
-}
-

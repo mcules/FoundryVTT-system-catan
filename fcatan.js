@@ -21,7 +21,7 @@
 
 // Import Modules
 import { addTiebreaker } from "./module/combat.js";
-import { FCCards } from "./module/FCCards.js"
+import { FCCards } from "./module/FCCards.js";
 
 /* -----------------------------------------*/
 /*  Founders of Catan System Initialization */
@@ -36,8 +36,7 @@ Hooks.once("init", async function() {
 
   //set CONFIGs and define any non-optional things as basically as possible here.
   CONFIG.Combat.initiative.formula = '2d6';
-  CONFIG.Catan.waterTexture = 'Catan/Land%20Tiles/Water.png';
-  CONFIG.Catan.desertTexture = 'Catan/Land%20Tiles/Desert-1.png';
+  CONFIG.Catan = {waterTexture: 'Catan/Land%20Tiles/Water.png', desertTexture: 'Catan/Land%20Tiles/Desert-1.png'};
   CONFIG.Cards.documentClass = FCCards;
 });
 

@@ -58,3 +58,11 @@ async function replaceEmbeddedCards(replDeck, newArr) {
     await replDeck.createEmbeddedDocuments("Card", newArrData);
     return replDeck;
 }
+
+//Display a new application to select cards.
+//Creates a temporary stack of cards that should be "discarded" - returned to their deck.
+//Display application with list of cards in current hand, each with checkbox
+//When user clicks okay, create a temporary stack of these cards and Return them. 
+async function playHandCards() {
+  //write code here
+}

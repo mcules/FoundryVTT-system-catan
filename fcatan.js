@@ -41,3 +41,16 @@ Hooks.once("init", async function() {
  //Store array in combat.
  //Shuffle appropriate sized tile decks and set images accordingly.
  //If possible, place number tiles also, skipping deserts.
+
+//TODO: Add source deck name to Draw chat message.
+
+//TODO: Create Application Window for players to draw cards 
+
+//MUST DO:
+//Create Return Card app
+//Create Draw macro
+//Add deck name to draw localization
+//populate player macro bars
+
+//VERY NICE TO DO:
+//Auto game setup.

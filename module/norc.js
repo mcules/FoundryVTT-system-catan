@@ -66,3 +66,8 @@ async function replaceEmbeddedCards(replDeck, newArr) {
 async function playHandCards() {
   //write code here
 }
+
+//Crate a generic macro so a player can draw from a particular deck
+async function drawCard(deckName, numCards=1) {
+  //write code here
+}

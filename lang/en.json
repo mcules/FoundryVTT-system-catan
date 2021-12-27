@@ -1,3 +1,5 @@
 {
-  "fcatan.ExampleLangStr": "Follow this format to add language strings."
+  "fcatan.ExampleLangStr": "Follow this format to add language strings.",
+
+  "CARDS.NotifyDiscard": "Discarded {number} cards to: {link}"
 }

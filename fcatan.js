@@ -1,18 +1,30 @@
 /**
- * The minimal possible Foundry game system.
+ * The minimal possible Foundry game system intended for board game use.
+ * Founders of Catan PERSONAL USE ONLY added.
  * Author: Norc
  */
 
-// Import Modules
+ //TODO: Convert from Pseudocode
+ //Hooks.on("createCombat") { init array with all tiles with water texture. Opacity blue = port. Opacity black = land }
+ //Store array in combat.
+ //Shuffle appropriate sized tile decks and set images accordingly.
+ //If possible, place number tiles also, skipping deserts.
+
+ //TODO: Extend core card applications to be more catan-friendly
+ 
+//MUST DO:
+//Extend Pass to also pass the card data (nicely sorted and grouped string of passed cards). submit feature request also.
+//populate player macro barsvideo
+
+//VERY NICE TO DO:
+//Auto game setup.
+
 // Import Modules
 import { addTiebreaker } from "./module/combat.js";
 
-/* -------------------------------------------- */
-/*  Foundry VTT Initialization                  */
-/* -------------------------------------------- */
-
-
-
+/* -----------------------------------------*/
+/*  Founders of Catan System Initialization */
+/* -----------------------------------------*/
 
 /**
  * Init hook.
@@ -23,34 +35,17 @@ Hooks.once("init", async function() {
 
   //set CONFIGs and define any non-optional things as basically as possible here.
   CONFIG.Combat.initiative.formula = '2d6';
-  //TODO: define
   CONFIG.Catan.waterTexture = 'Catan/Land%20Tiles/Water.png';
   CONFIG.Catan.desertTexture = 'Catan/Land%20Tiles/Desert-1.png'
-
+  
 });
 
 /**
  * Add array of possible tiebreakers to combat when it is created
  */
- 
- Hooks.on("createCombat", (combat, opts, ID) => addTiebreaker(combat));
+  Hooks.on("createCombat", (combat, opts, ID) => addTiebreaker(combat));
  // Hooks.on("hotbarDrop", (bar, data, slot) => macros.create5eMacro(data, slot));
 
- //TODO: Convert from Pseudocode
- //Hooks.on("createCombat") { init array with all tiles with water texture. Opacity blue = port. Opacity black = land }
- //Store array in combat.
- //Shuffle appropriate sized tile decks and set images accordingly.
- //If possible, place number tiles also, skipping deserts.
-
-//TODO: Add source deck name to Draw chat message.
-
-//TODO: Create Application Window for players to draw cards 
-
-//MUST DO:
-//Create Return Card app
-//Create Draw macro
-//Add deck name to draw localization
-//populate player macro bars
-
-//VERY NICE TO DO:
-//Auto game setup.
+/**
+ * Clear Discard pile on combat turn end
+ */

@@ -71,3 +71,14 @@ async function playHandCards() {
 async function drawCard(deckName, numCards=1) {
   //write code here
 }
+
+//Returns the Cards document that is the player's hand. 
+//if player is GM, return the hand that is named the name of the user plus " Hand"
+function getHand() {
+ let h = game.cards.contents.filter( (d) => ( d.isOwner && d.type === 'hand') );
+ h = h[0];
+ if ( game.user.isGM ) h = game.cards.getName(`${game.user.name} Hand`);  
+ //TODO: needs sadpath handling
+ return h;
+}
+

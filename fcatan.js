@@ -36,7 +36,23 @@ Hooks.once("init", async function() {
 
   //set CONFIGs and define any non-optional things as basically as possible here.
   CONFIG.Combat.initiative.formula = '2d6';
-  CONFIG.Catan = {waterTexture: 'Catan/Land%20Tiles/Water.png', desertTexture: 'Catan/Land%20Tiles/Desert-1.png'};
+  CONFIG.Catan = {waterTexture: 'Catan/Land%20Tiles/Water.png'
+   , desertTexture: 'Catan/Land%20Tiles/Desert-1.png'
+   , fieldsTexture: 'Catan/Land%20Tiles/Plains-1.png'
+   , forestTexture: 'Catan/Land%20Tiles/Wood-1.png'
+   , hillsTexture: 'Catan/Land%20Tiles/Brick-1.png'
+   , mountainsTexture: 'Catan/Land%20Tiles/Stone-1.png'
+   , pastureTexture: 'Catan/Land%20Tiles/Sheep-1.png'
+   , port3to1Texture: 'Catan/Port%20Tiles/3Port%20Tile.png'
+   , portGrainTexture: 'Catan/Port%20Tiles/GrainPort.png'
+   , portSheepTexture: 'Catan/Port%20Tiles/SheepPort.png'
+   , portWoodTexture: 'Catan/Port%20Tiles/WoodPort.png'
+   , portBrickTexture: 'Catan/Port%20Tiles/BrickPort.png'
+   , portStoneTexture: 'Catan/Port%20Tiles/StonePort.png'
+   , blankLandTexture: ''
+   , blankPortTexture: ''
+   , blankLetDiscTexture: ''
+  };
   CONFIG.Cards.documentClass = FCCards;
 });
 

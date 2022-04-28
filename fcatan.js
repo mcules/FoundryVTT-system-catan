@@ -22,6 +22,7 @@
 // Import Modules
 import { addTiebreaker } from "./module/combat.js";
 import { FCCards } from "./module/FCCards.js";
+import MonarchIntegration from "./module/MonarchIntegration.js";
 
 /* -----------------------------------------*/
 /*  Founders of Catan System Initialization */
@@ -54,6 +55,8 @@ Hooks.once("init", async function() {
    , blankLetDiscTexture: ''
   };
   CONFIG.Cards.documentClass = FCCards;
+
+  MonarchIntegration.init();
 });
 
 /**

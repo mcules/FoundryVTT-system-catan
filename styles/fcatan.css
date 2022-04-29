@@ -1,4 +1,18 @@
 .fcatan {
-  /* Add CSS styles. Consider adding your short system name as a class to these styles.  */
-  /* This helps to "namespace" them and avoid affecting things you don't mean to. */
+	/* Add CSS styles. Consider adding your short system name as a class to these styles.  */
+	/* This helps to "namespace" them and avoid affecting things you don't mean to. */
+}
+
+.monarch-hand .card-wrapper.fcatan-selected {
+	box-shadow: -2px 0 8px rgba(255, 100, 100);
+}
+.fcatan-selected::after {
+	content: " ";
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background: rgba(255, 100, 100, 0.3);
+	pointer-events: none;
 }

@@ -1,8 +1,11 @@
 export default class MonarchIntegration {
 	static init() {
 		Hooks.on("getMonarchHandComponents", this.getMonarchComponents.bind(this));
-		Hooks.on("getMonarchHandComponents", this.getMonarchApplicationComponents.bind(this));
+		Hooks.on("getMonarchHandComponents", this.getMonarchHandComponents.bind(this));
+
 		Hooks.on("getMonarchCardComponents", this.getMonarchComponents.bind(this));
+
+		Hooks.on("clickMonarchCard", this.clickMonarchCard.bind(this));
 	}
 
 	static getMonarchComponents(monarch, components) {
@@ -13,13 +16,31 @@ export default class MonarchIntegration {
 		];
 
 		components.contextMenu.push(...this.getPassControls());
+		components.cardClasses.push(card => `fcatan-${card.data.suit}`);
 	}
 
 
-	static getMonarchApplicationComponents(monarch, components) {
-		console.log(components.appControls);
+	static getMonarchHandComponents(monarch, components) {
 		components.appControls.length = 0;
 		components.appControls.push(...this.getResourceControls(), this.drawDevelopment);
+
+		components.cardClasses.push(
+			// For resources, add the fcatan-selected class if the card is selected
+			card => card.data.suit == "resource" && card.getFlag("fcatan", "selected") ? "fcatan-selected" : ""
+		);
+	}
+
+	static clickMonarchCard(event, monarch, card) {
+		if (monarch.constructor.name != "MonarchHand") return true;
+		
+		if (card.data.suit == "resource") {
+			if (!event.ctrlKey) return true;
+			const selected = Boolean(card.getFlag("fcatan", "selected"));
+			card.setFlag("fcatan", "selected", !selected);
+			return false;
+		}
+
+		return true;
 	}
 
 	static getPassControls() {
@@ -27,9 +48,9 @@ export default class MonarchIntegration {
 			.map((hand, i) => ({
 				class: `pass-card-${i}`,
 				icon: "fas fa-share-square",
-				label: card => `Pass ${card.data.name} to ${hand.name}`,
+				label: `Pass to ${hand.name}`,
 				hide: (card, pile) => card.data.suit !== "resource" || pile == hand,
-				onclick: (event, card, pile) => this.passCard(card, hand),
+				onclick: (event, card, pile) => this.passCard(card, hand, pile),
 			}))
 	}
 
@@ -63,18 +84,30 @@ export default class MonarchIntegration {
 		class: "play-card",
 		icon: "fas fa-chevron-circle-right",
 		label: card => `Activate ${card.data.name}`,
-		hide: card => card.data.suit == "resource" || card.data.suit == "victory",
+		hide: card => card.data.suit !== "development" && card.data.suit !== "knight",
 		onclick: this.playDevelopmentCard.bind(this)
 	}
 
-	static spendResource(event, card, hand) {
-		card.pass(Monarch.discardPile);
+	static async spendResource(event, card, hand) {
+		const updateData = { "flags.fcatan.selected": false }
+		// If not selected, just spend the card
+		if (!card.getFlag("fcatan", "selected")) return await card.pass(Monarch.discardPile, { updateData });
+
+		// Otherwise spend all the selected cards
+		const cards = hand.cards.filter(card => card.getFlag("fcatan", "selected"));
+		for (let card of cards) await card.pass(Monarch.discardPile, { updateData });
 	}
-	static playDevelopmentCard(event, card, hand) {
-		card.pass(Monarch.discardPile);
+	static async playDevelopmentCard(event, card, hand) {
+		return await card.pass(Monarch.discardPile);
 	}
-	static passCard(card, hand) {
-		card.pass(hand);
+	static async passCard(card, target, hand) {
+		const updateData = { "flags.fcatan.selected": false }
+		// If not selected, just pass the card
+		if (!card.getFlag("fcatan", "selected")) return await card.pass(target, { updateData });
+
+		// Otherwise pass all the selected cards
+		const cards = hand.cards.filter(card => card.getFlag("fcatan", "selected"));
+		for (let card of cards) await card.pass(target, { updateData });
 	}
 	static produceResource(hand, resource) {
 		hand.draw(this[`${resource.toLowerCase()}Pile`]);

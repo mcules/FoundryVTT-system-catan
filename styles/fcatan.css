@@ -34,20 +34,20 @@
 }
 
 .fcatan-icon.brick::before {
-	background-image: url("/modules/fcatan/assets/brick-icon.png");
+	background-image: url("/systems/fcatan/assets/brick-icon.png");
 }
 .fcatan-icon.grain::before {
-	background-image: url("/modules/fcatan/assets/grain-icon.png");
+	background-image: url("/systems/fcatan/assets/grain-icon.png");
 }
 .fcatan-icon.lumber::before {
-	background-image: url("/modules/fcatan/assets/lumber-icon.png");
+	background-image: url("/systems/fcatan/assets/lumber-icon.png");
 }
 .fcatan-icon.ore::before {
-	background-image: url("/modules/fcatan/assets/ore-icon.png");
+	background-image: url("/systems/fcatan/assets/ore-icon.png");
 }
 .fcatan-icon.wool::before {
-	background-image: url("/modules/fcatan/assets/wool-icon.png");
+	background-image: url("/systems/fcatan/assets/wool-icon.png");
 }
 .fcatan-icon.development::before {
-	background-image: url("/modules/fcatan/assets/development-icon.png");
+	background-image: url("/systems/fcatan/assets/development-icon.png");
 }

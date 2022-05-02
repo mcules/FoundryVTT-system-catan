@@ -6,6 +6,13 @@
 .monarch-hand .card-wrapper.fcatan-selected {
 	box-shadow: -2px 0 8px rgba(255, 100, 100);
 }
+
+.monarch .app-control {
+	white-space: nowrap;
+	flex-shrink: 1;
+}
+
+
 .fcatan-selected::after {
 	content: " ";
 	position: absolute;
@@ -15,4 +22,32 @@
 	right: 0;
 	background: rgba(255, 100, 100, 0.3);
 	pointer-events: none;
+}
+
+.fcatan-icon::before {
+	content: " ";
+	background-size: contain;
+	display: inline-block;
+	width: 1.5em;
+	height: 1.5em;
+	margin-bottom: -0.4em;
+}
+
+.fcatan-icon.brick::before {
+	background-image: url("/modules/fcatan/assets/brick-icon.png");
+}
+.fcatan-icon.grain::before {
+	background-image: url("/modules/fcatan/assets/grain-icon.png");
+}
+.fcatan-icon.lumber::before {
+	background-image: url("/modules/fcatan/assets/lumber-icon.png");
+}
+.fcatan-icon.ore::before {
+	background-image: url("/modules/fcatan/assets/ore-icon.png");
+}
+.fcatan-icon.wool::before {
+	background-image: url("/modules/fcatan/assets/wool-icon.png");
+}
+.fcatan-icon.development::before {
+	background-image: url("/modules/fcatan/assets/development-icon.png");
 }

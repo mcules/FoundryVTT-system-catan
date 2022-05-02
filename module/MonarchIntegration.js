@@ -57,7 +57,7 @@ export default class MonarchIntegration {
 	static getResourceControls() {
 		return this.resources.map(resource => ({
 			class: `produce-${resource.toLowerCase()}`,
-			icon: `catan-icon ${resource.toLowerCase()}`,
+			icon: `fcatan-icon ${resource.toLowerCase()}`,
 			label: `${resource}`,
 			tooltip: `Produce ${resource}`,
 			onclick: (event, monarch, hand) => this.produceResource(hand, resource)
@@ -66,9 +66,9 @@ export default class MonarchIntegration {
 
 	static drawDevelopment = {
 		class: `draw-development`,
-		icon: `catan-icon development`,
+		icon: `fcatan-icon development`,
 		label: `Development`,
-		tooltip: `Draw Development`,
+		tooltip: `Draw Development Card`,
 		onclick: (event, monarch, hand) => this.buyDevelopment(hand)
 	}
 
@@ -102,6 +102,7 @@ export default class MonarchIntegration {
 	}
 	static async passCard(card, target, hand) {
 		const updateData = { "flags.fcatan.selected": false }
+		
 		// If not selected, just pass the card
 		if (!card.getFlag("fcatan", "selected")) return await card.pass(target, { updateData });
 

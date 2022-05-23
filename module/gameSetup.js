@@ -9,6 +9,8 @@ game.canvas.background.placeables.forEach(t =>
     let curPortHexImg = '' //initialize with first card in shuffled port tile deck of appropriate player num
     let curLetDiscTexture = '' //define as set array appropriate for player num, perhaps as a CONFIG.
 
+    let 
+
     switch(t.data.img) {
         case CONFIG.blankLandTexture:
             //Add logic to set curHex to be one of the texture configuration values, based on the order of cards in the LandHexTile deck

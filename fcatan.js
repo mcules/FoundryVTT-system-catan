@@ -49,9 +49,9 @@ Hooks.once("init", async function() {
    , portWoodTexture: 'Catan/Port%20Tiles/WoodPort.png'
    , portBrickTexture: 'Catan/Port%20Tiles/BrickPort.png'
    , portStoneTexture: 'Catan/Port%20Tiles/StonePort.png'
-   , blankLandTexture: ''
-   , blankPortTexture: ''
-   , blankLetDiscTexture: ''
+   , blankLandTexture: 'Catan/Land%20Tiles/BlankLand.png'
+   , blankPortTexture: 'Catan/Land%20Tiles/BlankPort.png'
+   , blankLetDiscTexture: 'Catan/Number%tiles/BlankNum'
   };
   CONFIG.Cards.documentClass = FCCards;
 });

@@ -5,7 +5,7 @@
 
 /*
 await resetBoard();
-await resetDecks();
+
 
 await randomizeBoard();
 */
@@ -18,15 +18,9 @@ async function resetDecks() {
 }
 //reset used game board
 async function resetBoard() {
-    let hexCnt = 0;
-    let portCnt = 0;
-    let discCnt = 0;
-
+    await resetDecks();
     let newImg = '/error.png' 
-
-    let hexDeck = game.cards.getName("Land Tiles");
-    let portDeck = game.cards.getName("Port Tiles");
-    let discArr = [];
+    let desArr = [];
 
     game.canvas.tiles.documentCollection.contents.forEach(async td =>
         {
@@ -58,9 +52,46 @@ async function resetBoard() {
                 newImg = 'Catan/Port%20Tiles/MysteryPort.png';
                 console.log(`Current img: ${td.texture.src}. Trying to reset to ${newImg}`); 
                 await td.update({ "texture.src": newImg });
-                break;  
+            break;  
 
-            //add case number tile
+            //upgrade to config later
+            case 'Catan/Number%20Tiles/5-6/A2.png':
+            case 'Catan/Number%20Tiles/5-6/B5.png':
+            case 'Catan/Number%20Tiles/5-6/C4.png':
+            case 'Catan/Number%20Tiles/5-6/D6.png':
+            case 'Catan/Number%20Tiles/5-6/E3.png':
+            case 'Catan/Number%20Tiles/5-6/F9.png':
+            case 'Catan/Number%20Tiles/5-6/G8.png':
+            case 'Catan/Number%20Tiles/5-6/H11.png':
+            case 'Catan/Number%20Tiles/5-6/I11.png':
+            case 'Catan/Number%20Tiles/5-6/J10.png':
+            case 'Catan/Number%20Tiles/5-6/K6.png':
+            case 'Catan/Number%20Tiles/5-6/L3.png':
+            case 'Catan/Number%20Tiles/5-6/H8.png':
+            case 'Catan/Number%20Tiles/5-6/N4.png':
+            case 'Catan/Number%20Tiles/5-6/O8.png':
+            case 'Catan/Number%20Tiles/5-6/P10.png':
+            case 'Catan/Number%20Tiles/5-6/Q11.png':
+            case 'Catan/Number%20Tiles/5-6/R12.png':
+            case 'Catan/Number%20Tiles/5-6/S10.png':
+            case 'Catan/Number%20Tiles/5-6/T5.png':
+            case 'Catan/Number%20Tiles/5-6/U4.png':
+            case 'Catan/Number%20Tiles/5-6/V9.png':
+            case 'Catan/Number%20Tiles/5-6/W5.png':
+            case 'Catan/Number%20Tiles/5-6/X9.png':
+            case 'Catan/Number%20Tiles/5-6/Y12.png':
+            case 'Catan/Number%20Tiles/5-6/Za3.png':
+            case 'Catan/Number%20Tiles/5-6/Zb2.png':
+            case 'Catan/Number%20Tiles/5-6/Zc6.png':
+                //Tile is a number disc that should be reset
+                //will eventually have to set Z level back for Desert tiles
+                console.log("non-default number disc tile found");          
+                newImg = 'Catan/Number%20Tiles/BlankNum.png';
+                console.log(`Current img: ${td.texture.src}. Trying to reset to ${newImg}`); 
+                //TODO: set Z value to front value again also
+                await td.update({ "texture.src": newImg });
+            break;  
+
         }
     });
     
@@ -69,6 +100,7 @@ return true;
 
 //randomize game board
 async function randomizeBoard() {
+
     let hexCnt = 0;
     let portCnt = 0;
     let discCnt = 0;
@@ -77,7 +109,39 @@ async function randomizeBoard() {
 
     let hexDeck = game.cards.getName("Land Tiles");
     let portDeck = game.cards.getName("Port Tiles");
-    let discArr = [];
+    let discArr = [           
+        'Catan/Number%20Tiles/5-6/A2.png'
+        ,'Catan/Number%20Tiles/5-6/B5.png'
+        ,'Catan/Number%20Tiles/5-6/C4.png'
+        ,'Catan/Number%20Tiles/5-6/D6.png'
+        ,'Catan/Number%20Tiles/5-6/E3.png'
+        ,'Catan/Number%20Tiles/5-6/F9.png'
+        ,'Catan/Number%20Tiles/5-6/G8.png'
+        ,'Catan/Number%20Tiles/5-6/H11.png'
+        ,'Catan/Number%20Tiles/5-6/I11.png'
+        ,'Catan/Number%20Tiles/5-6/J10.png'
+        ,'Catan/Number%20Tiles/5-6/K6.png'
+        ,'Catan/Number%20Tiles/5-6/L3.png'
+        ,'Catan/Number%20Tiles/5-6/H8.png'
+        ,'Catan/Number%20Tiles/5-6/N4.png'
+        ,'Catan/Number%20Tiles/5-6/O8.png'
+        ,'Catan/Number%20Tiles/5-6/P10.png'
+        ,'Catan/Number%20Tiles/5-6/Q11.png'
+        ,'Catan/Number%20Tiles/5-6/R12.png'
+        ,'Catan/Number%20Tiles/5-6/S10.png'
+        ,'Catan/Number%20Tiles/5-6/T5.png'
+        ,'Catan/Number%20Tiles/5-6/U4.png'
+        ,'Catan/Number%20Tiles/5-6/V9.png'
+        ,'Catan/Number%20Tiles/5-6/W5.png'
+        ,'Catan/Number%20Tiles/5-6/X9.png'
+        ,'Catan/Number%20Tiles/5-6/Y12.png'
+        ,'Catan/Number%20Tiles/5-6/Za3.png'
+        ,'Catan/Number%20Tiles/5-6/Zb2.png'
+        ,'Catan/Number%20Tiles/5-6/Zc6.png'];
+
+        let desNumArr = [];
+        //check is correct in console. not sure if following statement is more than pseudocode
+        desNumArr = hexDeck.cards.contents.filter( c => c.img == 'Catan/Land%20Tiles/Desert-1.png').sort ;
 
     game.canvas.tiles.documentCollection.contents.forEach(async td =>
         {
@@ -97,10 +161,9 @@ async function randomizeBoard() {
                 newImg = hexDeck.cards.contents.filter( c => c.sort == hexCnt )[0].img
                 console.log(`Current img: ${td.texture.src}. Trying to assign ${newImg}`); 
                 if(hexCnt < hexDeck.cards.size) hexCnt++;
-                console.log(`${hexCnt} land tiles set and ${portCnt} ports set`)                 
+                console.log(`${hexCnt} land tiles set, ${portCnt} ports set, and ${discCnt} number discs set.`)                 
                 await td.update({ "texture.src": newImg });
-                //await t.refresh();
-                break;
+            break;
 
             //upgrade to config later
             case 'Catan/Port%20Tiles/MysteryPort.png':
@@ -109,12 +172,28 @@ async function randomizeBoard() {
                 newImg = portDeck.cards.contents.filter( c => c.sort == portCnt )[0].img
                 console.log(`Current img: ${td.texture.src}. Trying to assign ${newImg}`); 
                 if(portCnt < portDeck.cards.size) portCnt++;
-                console.log(`${hexCnt} land tiles set and ${portCnt} ports set`)
+                console.log(`${hexCnt} land tiles set, ${portCnt} ports set, and ${discCnt} number discs set.`)
                 await td.update({ "texture.src": newImg });
-                break; 
-                //await t.refresh();  
+            break;  
 
-            //add case number tile
+            //upgrade to config later
+            case 'Catan/Number%20Tiles/BlankNum.png':
+                //Set up number discs
+                console.log("blank number disc tile found");            
+                newImg = discArr[discCnt];
+                //TODO: verify following logical clause
+                if (desNumArray.filter( n => n == td.sort ) <> undefined {
+                    console.log("Desert location found, skipping disc setting and sending to back")
+                    //TODO: send to back
+                } else 
+                { 
+                    console.log(`Current img: ${td.texture.src}. Trying to assign ${newImg}`); 
+                    if(discCnt < discArr.length) discCnt++;
+                    console.log(`${hexCnt} land tiles set, ${portCnt} ports set, and ${discCnt} number discs set.`)
+                    await td.update({ "texture.src": newImg });
+                }
+
+            break;  
         }
 
 

@@ -150,15 +150,13 @@ async function randomizeBoard() {
         ,'Catan/Number%20Tiles/5-6/Zc6.png' //28
 ];           
     let desNumArr = [];
-    let numStartLand = -1;
 
-    //create array of land number of hexes that are deserts
-    desNumArr = landDeck.cards.contents.filter( c => c.img == 'Catan/Land%20Tiles/Desert-1.png').map(c => (c.sort + 1) ) ;
+    //create array of land number of hexes that are deserts.Sorted to avoid index interference
+    desNumArr = landDeck.cards.contents.filter( c => c.img == 'Catan/Land%20Tiles/Desert-1.png').map(c => (Number(c.sort + 1)) ).sort(function(a, b){return a-b}) ;
     //desNumArr = [1,3];
     //desNumArr = [29,30];
-    //insert deserts into the array at the appropriate locations. Sorted to avoid index interference
-    desNumArr.sort().forEach(n => discArr.splice(n-1, 0, 'Desert'));
-
+    //insert deserts into the array at the appropriate locations. 
+    desNumArr.forEach(n => discArr.splice(n-1, 0, 'Desert'));
 
     //create array of all land tiles
     let landTArr = game.canvas.tiles.placeables.filter( t => (t.document.getFlag("fcatan","landNum") > 0 ) );
@@ -189,7 +187,7 @@ async function randomizeBoard() {
     */    
     
     //let numCornerStart = Math.floor(Math.random() * 6) + 1;
-    let numCornerStart = 1;
+    let numCornerStart = 4;
     let discNumOrderArr = [];
 
     //define the array of images of the numbered discs to match the rolled layout
@@ -202,29 +200,34 @@ async function randomizeBoard() {
                 ,16,17,18,19,20,21,22,23,24,25,26
                 ,27,28,29,30
             ];
-            numStartLand = 1;
             break;
         case 2: 
             //number from corner 2, discnum 4
             //new tile order 4-16,1-3,19-26,17-18,28-29,30,27
-            numStartLand = 4;
             discNumOrderArr = [
                 4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,19
-                ,20,21,22,23,24,25,26,17,18,28,29,30,27
+                ,20,21,22,23,24,25,26,17,18
+                ,28,29,30,27
             ];
-            //TODO: MAKE WORKY.
-            //discNumTArr.forEach( t => t.document.setFlag("fcatan", "discOrder", discOrderArr[discNumTArr]));
-            /*
-
-            ];
-            */
             break;
-        /*
-        case 3: numStart = 7;
-        case 4: numStart = 9;
+        case 3:
+            //number from corner 3, discnum 7;
+            discNumOrderArr = [
+                7,8,9,10,11,12,13,14,15,16,1,2,3,4,5,6
+                ,21,22,23,24,25,26,17,18,19,20
+                ,29,30,27,28
+            ];
+            break;
+        case 4:
+            //number from corner 4, discnum 9;
+            discNumOrderArr = [
+                9,10,11,12,13,14,15,16,1,2,3,4,5,6,7,8
+                ,22,23,24,25,26,17,18,19,20,21
+                ,29,30,27,28
+            ];
+            break;
         case 5: numStart = 12;
         case 6: numStart = 15;
-        */
     }
 
     //use the shuffled land deck and randomized tile order to place random land tiles

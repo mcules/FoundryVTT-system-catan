@@ -157,7 +157,8 @@ async function randomizeBoard() {
     desNumArr = landDeck.cards.contents.filter( c => c.img == 'Catan/Land%20Tiles/Desert-1.png').map(c => (c.sort + 1) ) ;
     //desNumArr = [29,30];
     //desNumArr = [29,30];
-    let earlyDesNumArr = [];
+    //insert deserts into the array at the appropriate locations
+    desNumArr.forEach(n => discArr.splice(n-1, 0, 'Desert'));
 
 
     //create array of all land tiles
@@ -204,62 +205,19 @@ async function randomizeBoard() {
         case 1: 
             //standard order
             //set DiscOrder flag on disc tiles equal to discNum flag
-            discNumTArr.forEach( t => t.document.setFlag("fcatan", "discOrder", t.document.getFlag("fcatan", "discNum")));
-
+            discNumOrderArr = Array.from(Array(30).keys());
             //first land tile to apply a number disc to
             numStartLand = 1;
             break;
         case 2: 
-            numStart = 4; 
             //new tile order 4-16,1-3,19-26,17-18,28-29,30,27
             discNumOrderArr = [
                 4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,19
                 ,20,21,22,23,24,25,26,17,18,28,29,30,27
             ];
             //TODO: MAKE WORKY. Also standardize first case to use this logic also?
-            discNumTArr.forEach( t => t.document.setFlag("fcatan", "discOrder", discOrderArr[discNumTArr]));
+            //discNumTArr.forEach( t => t.document.setFlag("fcatan", "discOrder", discOrderArr[discNumTArr]));
             /*
-            discArr = [
-                //1-5
-                'Catan/Number%20Tiles/5-6/N4.png'  //14
-                ,'Catan/Number%20Tiles/5-6/O8.png'  //15
-                ,'Catan/Number%20Tiles/5-6/P10.png' //16
-                , 'Catan/Number%20Tiles/5-6/A2.png'   //1
-                ,'Catan/Number%20Tiles/5-6/B5.png'  //2
-
-                //6-10
-                ,'Catan/Number%20Tiles/5-6/C4.png'  //3
-                ,'Catan/Number%20Tiles/5-6/D6.png'  //4
-                ,'Catan/Number%20Tiles/5-6/E3.png'  //5
-                ,'Catan/Number%20Tiles/5-6/F9.png'  //6
-                ,'Catan/Number%20Tiles/5-6/G8.png'  //7
-                
-                //11-15
-                ,'Catan/Number%20Tiles/5-6/H11.png' //8
-                ,'Catan/Number%20Tiles/5-6/I11.png' //9
-                ,'Catan/Number%20Tiles/5-6/J10.png' //10
-                ,'Catan/Number%20Tiles/5-6/K6.png'  //11
-                ,'Catan/Number%20Tiles/5-6/L3.png'  //12
-                
-                //16-20
-                ,'Catan/Number%20Tiles/5-6/M8.png'  //13
-                ,'Catan/Number%20Tiles/5-6/Y12.png' //25
-                ,'Catan/Number%20Tiles/5-6/Za3.png' //26
-                ,'Catan/Number%20Tiles/5-6/Q11.png' //17
-                ,'Catan/Number%20Tiles/5-6/R12.png' //18
-
-                //21-25
-                ,'Catan/Number%20Tiles/5-6/S10.png' //19
-                ,'Catan/Number%20Tiles/5-6/T5.png'  //20
-                ,'Catan/Number%20Tiles/5-6/U4.png'  //21
-                ,'Catan/Number%20Tiles/5-6/V9.png'  //22
-                ,'Catan/Number%20Tiles/5-6/W5.png'  //23
-
-                //26-28
-                ,'Catan/Number%20Tiles/5-6/X9.png'  //24
-                ,'Catan/Number%20Tiles/5-6/Zb2.png' //27
-                ,'Catan/Number%20Tiles/5-6/Zc6.png' //28
-
 
             ];
             */
@@ -273,11 +231,7 @@ async function randomizeBoard() {
         case 6: numStart = 15;
         */
     }
-    //insert deserts into the array at the appropriate locations
-    desNumArr.forEach(n => discArr.splice(n-1, 0, 'Desert'));
-    //calculate adjustment for early deserts possibly throwing off first land to number
-    earlyDesNumArr = desNumArr.filter( n => (n < numStartLand) );
-    earlyDesOffsetNum = earlyDesNumArr.length;
+
 
     //place the numbered discs, skipping deserts and adjusting for early deserts
     //TODO: Desert skipping not QUITE right, fix
@@ -287,15 +241,15 @@ async function randomizeBoard() {
         //console.log(n);
         //});
         //
-        newImg = discArr[ t.document.getFlag("fcatan","discOrder") - 1 ];
+        newImg = discArr[ discNumOrderArr[t.document.getFlag("fcatan","discNum") - 1] ];
         if (newImg === 'Desert') {
-            console.log("Desert location found, skipping disc setting and sending to back")
+            console.log(`Desert location found at disc ${t.document.getFlag("fcatan","discNum")}. discNumOrderArr is ${discNumOrderArr[t.document.getFlag("fcatan","discNum") - 1]} , skipping disc setting and sending to back`)
             await t.document.update({ z: 0 });
         } else { 
-
             console.log(`Current img: ${t.document.texture.src}. Trying to assign ${newImg}`);   
             await t.document.update({ "texture.src": newImg });
         }
     });
 console.log(discArr);
+console.log(discNumOrderArr);
 }

@@ -149,12 +149,8 @@ async function randomizeBoard() {
         ,'Catan/Number%20Tiles/5-6/Zb2.png' //27
         ,'Catan/Number%20Tiles/5-6/Zc6.png' //28
 ];           
-    let desNumArr = [];
-
     //create array of land number of hexes that are deserts.Sorted to avoid index interference
-    desNumArr = landDeck.cards.contents.filter( c => c.img == 'Catan/Land%20Tiles/Desert-1.png').map(c => (Number(c.sort + 1)) ).sort(function(a, b){return a-b}) ;
-    //desNumArr = [1,3];
-    //desNumArr = [29,30];
+    let desNumArr = landDeck.cards.contents.filter( c => c.img == 'Catan/Land%20Tiles/Desert-1.png').map(c => (Number(c.sort + 1)) ).sort(function(a, b){return a-b}) ;
     //insert deserts into the array at the appropriate locations. 
     desNumArr.forEach(n => discArr.splice(n-1, 0, 'Desert'));
 
@@ -186,15 +182,14 @@ async function randomizeBoard() {
 
     */    
     
-    //let numCornerStart = Math.floor(Math.random() * 6) + 1;
-    let numCornerStart = 4;
+    let numCornerStart = Math.floor(Math.random() * 6) + 1;
+    //array containing sequence of disc numbers in the order they should be placed
     let discNumOrderArr = [];
 
     //define the array of images of the numbered discs to match the rolled layout
     switch (numCornerStart) {
         case 1: 
             //standard order, start at disc 1
-            //set DiscOrder flag on disc tiles equal to discNum flag
             discNumOrderArr = [
                 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
                 ,16,17,18,19,20,21,22,23,24,25,26
@@ -202,8 +197,7 @@ async function randomizeBoard() {
             ];
             break;
         case 2: 
-            //number from corner 2, discnum 4
-            //new tile order 4-16,1-3,19-26,17-18,28-29,30,27
+            //number from corner 2, discnum 4 
             discNumOrderArr = [
                 4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,19
                 ,20,21,22,23,24,25,26,17,18
@@ -226,28 +220,34 @@ async function randomizeBoard() {
                 ,29,30,27,28
             ];
             break;
-        case 5: numStart = 12;
+        case 5:
+            //number from corner 5, discnum 12;
+            discNumOrderArr = [
+                12,13,14,15,16,1,2,3,4,5,6,7,8,9,10,11
+                ,24,25,26,17,18,19,20,21,22,23
+                ,30,27,28,29
+            ];
+            break;
         case 6: numStart = 15;
+            //number from corner 6, discnum 15;
+            discNumOrderArr = [
+                15,16,1,2,3,4,5,6,7,8,9,10,11,12,13,14
+                ,26,17,18,19,20,21,22,23,24,25
+                ,27,28,29,30
+            ];
+            break;
     }
 
-    //use the shuffled land deck and randomized tile order to place random land tiles
+    //use the shuffled land deck and randomized land order to place random land tiles
     landTArr.forEach ( async t => {
-        //newImg = landDeck.cards.contents.filter( c => c.sort == t.document.getFlag("fcatan","landNum")-1)[0].img 
         newImg = landDeck.cards.contents.filter( c => c.sort == discNumOrderArr.findIndex(n => n == parseInt( t.document.getFlag("fcatan","landNum") ) ) )[0].img;
         await t.document.update({ "texture.src": newImg });
     });
     
-    //place the numbered discs, skipping deserts and adjusting for early deserts
-    //TODO: Desert skipping not QUITE right, fix
+    //place the numbered discs, skipping deserts
     discNumTArr.forEach ( async t => {
-        //console.log(`Desert discs are`);
-        //desNumArr.forEach(function(n) {
-        //console.log(n);
-        //});
-        //
         newImg = discArr[ discNumOrderArr.findIndex(n => n == parseInt( t.document.getFlag("fcatan","discNum") ) ) ];
-        console.log(`newImg is ${newImg}$ for disc number ${t.document.getFlag("fcatan","discNum")}. it is the number ${discNumOrderArr.findIndex(n => n == parseInt( t.document.getFlag("fcatan","discNum") ) )} entry in discNumOrderArr`)
-
+//        console.log(`newImg is ${newImg}$ for disc number ${t.document.getFlag("fcatan","discNum")}. it is the number ${discNumOrderArr.findIndex(n => n == parseInt( t.document.getFlag("fcatan","discNum") ) )} entry in discNumOrderArr`)
         if (newImg === 'Desert') {
             console.log(`Desert location found at disc ${t.document.getFlag("fcatan","discNum")}. 
             !
@@ -258,11 +258,11 @@ async function randomizeBoard() {
             discNumOrderArr is ${discNumOrderArr[t.document.getFlag("fcatan","discNum") - 1]} , skipping disc setting and sending to back`)
             await t.document.update({ z: 0 });
         } else { 
-            console.log(`Current img: ${t.document.texture.src}. Trying to assign ${newImg}`);   
+//            console.log(`Current img: ${t.document.texture.src}. Trying to assign ${newImg}`);   
             await t.document.update({ "texture.src": newImg });
         }
     });
-console.log(discArr);
-console.log(discNumOrderArr);
-console.log (desNumArr );
+//console.log(discArr);
+//console.log(discNumOrderArr);
+//console.log (desNumArr );
 }

@@ -115,8 +115,6 @@ return true;
 //randomize game board
 async function randomizeBoard() {
 
-    let desCnt = 0;
-
     let newImg = '/error.png' 
 
     let landDeck = game.cards.getName("Land Tiles");
@@ -152,6 +150,7 @@ async function randomizeBoard() {
         ,'Catan/Number%20Tiles/5-6/Zc6.png' //28
 ];           
     let desNumArr = [];
+    let numStartLand = -1;
 
     //create array of land number of hexes that are deserts
     desNumArr = landDeck.cards.contents.filter( c => c.img == 'Catan/Land%20Tiles/Desert-1.png').map(c => (c.sort + 1) ) ;
@@ -170,13 +169,6 @@ async function randomizeBoard() {
     //create array of all number disc tiles
     let discNumTArr = game.canvas.tiles.placeables.filter( t => (t.document.getFlag("fcatan","discNum") > 0 ) );
  
-    //use the shuffled land deck to randomize the land tiles
-
-    landTArr.forEach ( async t => {
-            newImg = landDeck.cards.contents.filter( c => c.sort == t.document.getFlag("fcatan","landNum")-1)[0].img 
-            await t.document.update({ "texture.src": newImg });
-        });
-    
     //use the shuffled port deck to randomize the land tiles
     portTArr.forEach ( async t => {
         newImg = portDeck.cards.contents.filter( c => c.sort == t.document.getFlag("fcatan","portNum")-1)[0].img 
@@ -197,32 +189,31 @@ async function randomizeBoard() {
     */    
     
     //let numCornerStart = Math.floor(Math.random() * 6) + 1;
-    let numCornerStart = 1;
+    let numCornerStart = 2;
     let discNumOrderArr = [];
 
     //define the array of images of the numbered discs to match the rolled layout
     switch (numCornerStart) {
         case 1: 
-            //standard order
+            //standard order, start at disc 1
             //set DiscOrder flag on disc tiles equal to discNum flag
             discNumOrderArr = Array.from(Array(30).keys());
-            //first land tile to apply a number disc to
             numStartLand = 1;
             break;
         case 2: 
+            //number from corner 2, discnum 4
             //new tile order 4-16,1-3,19-26,17-18,28-29,30,27
+            numStartLand = 4;
             discNumOrderArr = [
                 4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,19
                 ,20,21,22,23,24,25,26,17,18,28,29,30,27
             ];
-            //TODO: MAKE WORKY. Also standardize first case to use this logic also?
+            //TODO: MAKE WORKY.
             //discNumTArr.forEach( t => t.document.setFlag("fcatan", "discOrder", discOrderArr[discNumTArr]));
             /*
 
             ];
             */
-            //first land tile to apply a number disc to
-            numStartLand = 4;
             break;
         /*
         case 3: numStart = 7;
@@ -232,7 +223,13 @@ async function randomizeBoard() {
         */
     }
 
-
+    //use the shuffled land deck and randomized tile order to place random land tiles
+    landTArr.forEach ( async t => {
+        //newImg = landDeck.cards.contents.filter( c => c.sort == t.document.getFlag("fcatan","landNum")-1)[0].img 
+        newImg = landDeck.cards.contents.filter( c => c.sort == discNumOrderArr.findIndex(n => n == parseInt( t.document.getFlag("fcatan","landNum") ) ) )[0].img;
+        await t.document.update({ "texture.src": newImg });
+    });
+    
     //place the numbered discs, skipping deserts and adjusting for early deserts
     //TODO: Desert skipping not QUITE right, fix
     discNumTArr.forEach ( async t => {
@@ -241,7 +238,9 @@ async function randomizeBoard() {
         //console.log(n);
         //});
         //
-        newImg = discArr[ discNumOrderArr[t.document.getFlag("fcatan","discNum") - 1] ];
+        newImg = discArr[ discNumOrderArr.findIndex(n => n == parseInt( t.document.getFlag("fcatan","discNum") ) ) ];
+        console.log(`newImg is ${newImg}$ for disc number ${t.document.getFlag("fcatan","discNum")}. it is the number ${discNumOrderArr.findIndex(n => n == parseInt( t.document.getFlag("fcatan","discNum") ) )} entry in discNumOrderArr`)
+
         if (newImg === 'Desert') {
             console.log(`Desert location found at disc ${t.document.getFlag("fcatan","discNum")}. discNumOrderArr is ${discNumOrderArr[t.document.getFlag("fcatan","discNum") - 1]} , skipping disc setting and sending to back`)
             await t.document.update({ z: 0 });

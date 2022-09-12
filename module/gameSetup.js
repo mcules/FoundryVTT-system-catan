@@ -1,10 +1,8 @@
 //shuffle and reset decks
 
+//split into separate reset and new game macros
 
 
-
-/*
-await resetBoard();
 
 await randomizeBoard();
 
@@ -16,6 +14,7 @@ let landDeck = game.cards.getName("Land Tiles");
 let desNumArr = landDeck.cards.contents.filter( c => c.img == 'Catan/Land%20Tiles/Desert-1.png').map(c => (c.sort + 1) ) ;
 let newImg = landDeck.cards.contents.filter( c => c.sort == (landCnt - 1) )[0].img
 
+/*
 let t = game.canvas.tiles.controlled[0]
 await t.document.setFlag("fcatan","hexName","land1")
 

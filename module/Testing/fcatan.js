@@ -22,6 +22,7 @@
 // Import Modules
 import { addTiebreaker } from "./module/combat.js";
 import { FCCards } from "./module/FCCards.js";
+import MonarchIntegration from "./module/MonarchIntegration.js";
 
 /* -----------------------------------------*/
 /*  Founders of Catan System Initialization */
@@ -49,21 +50,30 @@ Hooks.once("init", async function() {
    , portWoodTexture: 'Catan/Port%20Tiles/WoodPort.png'
    , portBrickTexture: 'Catan/Port%20Tiles/BrickPort.png'
    , portStoneTexture: 'Catan/Port%20Tiles/StonePort.png'
-   , blankLandTexture: 'Catan/Land%20Tiles/BlankLand.png'
-   , blankPortTexture: 'Catan/Land%20Tiles/BlankPort.png'
-   , blankLetDiscTexture: 'Catan/Number%tiles/BlankNum'
+   , blankLandTexture: ''
+   , blankPortTexture: ''
+   , blankLetDiscTexture: ''
   };
   CONFIG.Cards.documentClass = FCCards;
+
+  MonarchIntegration.init();
 });
 
 //experimental
-Hooks.on("combatTurn", (c) => {if (c.updateData.updateOptions ==1) game.cards.getName("DISCARD PILE").recall()} );
+Hooks.on("combatTurn", (c) => {
+  //TODO: make fancier, c undefined currently
+  console.log(`turn hook fired, resetting discard`);
+  game.cards.getName("DISCARD PILE").recall();
+  //if (c.updateData.updateOptions ==1) game.cards.getName("DISCARD PILE").recall()
+} );
 
 /**
  * Add array of possible tiebreakers to combat when it is created
  */
   Hooks.on("createCombat", (combat, opts, ID) => addTiebreaker(combat));
  // Hooks.on("hotbarDrop", (bar, data, slot) => macros.create5eMacro(data, slot));
+
+
 
 /**
  * Clear Discard pile on combat turn end

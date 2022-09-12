@@ -28,6 +28,31 @@ import MonarchIntegration from "./module/MonarchIntegration.js";
 /*  Founders of Catan System Initialization */
 /* -----------------------------------------*/
 
+const CatanRenderHooks = {
+  renderPlayerList(config, html) {
+    console.log("rendered list of catan players")
+
+    let players = html.find('.player-name');
+            
+    for (let player of players) {
+      let playerCharacterName = player.innerText;
+      const playerName = playerCharacterName
+                          .substring(0, playerCharacterName.indexOf('['))
+                          .trim();                
+      
+      const userId = game.users.find((x) => x.name === playerName)?.id;
+      const user = game.users.get(userId);
+      
+      //find cards in player hand, filter to resource cards
+      let resNum = game.cards.getName(`${playerName} Hand`).cards.entries.length
+      //find cards in player hand, filter to development cards
+      //let dcNum = 1;
+
+      player.innerText = `${user.name} (${resNum} cards)`;
+    }
+  }
+}
+
 /**
  * Init hook.
  */
@@ -73,7 +98,7 @@ Hooks.on("combatTurn", (c) => {
   Hooks.on("createCombat", (combat, opts, ID) => addTiebreaker(combat));
  // Hooks.on("hotbarDrop", (bar, data, slot) => macros.create5eMacro(data, slot));
 
-
+Hooks.on("renderPlayerList", CatanRenderHooks.renderPlayerList);
 
 /**
  * Clear Discard pile on combat turn end
